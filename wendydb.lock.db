@@ -1,0 +1,6 @@
+#FileLock
+#Wed Mar 08 17:35:53 CET 2023
+server=192.168.178.75\:54246
+hostName=mbp-von-florian.fritz.box
+method=file
+id=186c21443fc21d48411311ec519200b631b180aadf2

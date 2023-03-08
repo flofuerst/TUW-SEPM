@@ -1,0 +1,19 @@
+2023-03-08T17:35:52.069+01:00 r= ip=  INFO 33923 --- [main] .a.i.SepmIndividualAssignmentApplication : Starting SepmIndividualAssignmentApplication using Java 17 with PID 33923 (/Users/florianfuerst/Desktop/Studium/4.Semester/template-java/backend/target/classes started by florianfuerst in /Users/florianfuerst/Desktop/Studium/4.Semester/template-java)
+2023-03-08T17:35:52.092+01:00 r= ip=  INFO 33923 --- [main] .a.i.SepmIndividualAssignmentApplication : No active profile set, falling back to 1 default profile: "default"
+2023-03-08T17:35:53.238+01:00 r= ip=  INFO 33923 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-03-08T17:35:53.247+01:00 r= ip=  INFO 33923 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-03-08T17:35:53.247+01:00 r= ip=  INFO 33923 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.5]
+2023-03-08T17:35:53.330+01:00 r= ip=  INFO 33923 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-03-08T17:35:53.331+01:00 r= ip=  INFO 33923 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1172 ms
+2023-03-08T17:35:53.368+01:00 r= ip=  INFO 33923 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-03-08T17:35:53.624+01:00 r= ip=  INFO 33923 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn1: url=jdbc:h2:./wendydb user=SA
+2023-03-08T17:35:53.625+01:00 r= ip=  INFO 33923 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-03-08T17:35:53.639+01:00 r= ip=  INFO 33923 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:./wendydb'
+2023-03-08T17:35:54.165+01:00 r= ip=  INFO 33923 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-03-08T17:35:54.178+01:00 r= ip=  INFO 33923 --- [main] .a.i.SepmIndividualAssignmentApplication : Started SepmIndividualAssignmentApplication in 2.721 seconds (process running for 3.723)
+2023-03-08T17:39:43.180+01:00 r= ip=  INFO 33923 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-03-08T17:39:43.203+01:00 r= ip=  INFO 33923 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-03-08T17:39:43.217+01:00 r= ip=  INFO 33923 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 11 ms
+2023-03-08T17:39:43.251+01:00 r=1497fe44e619 ip=127.0.0.1  INFO 33923 --- [http-nio-8080-exec-1] a.a.t.s.a.individual.config.LogFilter    : >>> GET /horses UA=Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/109.0
+2023-03-08T17:39:43.312+01:00 r=1497fe44e619 ip=127.0.0.1  INFO 33923 --- [http-nio-8080-exec-1] a.a.t.s.a.individual.rest.HorseEndpoint  : GET /horses
+2023-03-08T17:39:43.371+01:00 r=1497fe44e619 ip=127.0.0.1  INFO 33923 --- [http-nio-8080-exec-1] a.a.t.s.a.individual.config.LogFilter    : <<< GET /horses status=200 time=119ms
