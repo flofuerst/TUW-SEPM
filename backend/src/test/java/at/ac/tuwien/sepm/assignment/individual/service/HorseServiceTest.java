@@ -1,20 +1,20 @@
 package at.ac.tuwien.sepm.assignment.individual.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
-
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseListDto;
 import at.ac.tuwien.sepm.assignment.individual.type.Sex;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
+
 @ActiveProfiles({"test", "datagen"}) // enable "test" spring profile during test execution in order to pick up configuration from application-test.yml
 @SpringBootTest
 public class HorseServiceTest {
-
   @Autowired
   HorseService horseService;
 
@@ -27,4 +27,24 @@ public class HorseServiceTest {
         .map(HorseListDto::id, HorseListDto::sex)
         .contains(tuple(-1L, Sex.FEMALE));
   }
+
+  // TODO: add test for create in all layers
+  //  @Test
+  //  public void compareAllHorsesAfterCreate() throws ValidationException {
+  //    LOG.info("Compare Test");
+  //    int beforeAmount;
+  //    int afterAmount;
+  //    List<HorseListDto> horses = horseService.allHorses().toList();
+  //    beforeAmount = horses.size();
+  //    horseService.create(new HorseCreateDto(
+  //        "TestHorse",
+  //        "This is a Testhorse",
+  //        LocalDate.of(2000, 01, 01),
+  //        Sex.MALE,
+  //        null
+  //    ));
+  //    afterAmount = horses.size();
+  //    LOG.info("before: " + beforeAmount + " | after: " + afterAmount);
+  //    assertThat(beforeAmount == afterAmount - 1);
+  //  }
 }

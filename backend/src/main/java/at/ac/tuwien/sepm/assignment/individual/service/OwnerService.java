@@ -5,6 +5,7 @@ import at.ac.tuwien.sepm.assignment.individual.dto.OwnerDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.OwnerSearchDto;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -36,7 +37,7 @@ public interface OwnerService {
    * <p>
    * A owner is considered matched, if its name contains {@code searchParameters.name} as a substring.
    * The returned stream of owners never contains more than {@code searchParameters.maxAmount} elements,
-   *  even if there would be more matches in the persistent data store.
+   * even if there would be more matches in the persistent data store.
    * </p>
    *
    * @param searchParameters object containing the search parameters to match
@@ -49,7 +50,7 @@ public interface OwnerService {
    *
    * @param newOwner the data for the new owner
    * @return the owner, that was just newly created in the persistent data store
-   * @throws ValidationException if the
+   * @throws ValidationException if the create data given for the owner is in itself incorrect (no name, invalid email, ...)
    */
   OwnerDto create(OwnerCreateDto newOwner) throws ValidationException;
 }

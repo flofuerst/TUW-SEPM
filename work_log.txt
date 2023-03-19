@@ -4,9 +4,9 @@ Gesamtsumme der Arbeitszeit am Projekt:
 
 ***************************************
 
-Bearbeitete Story:
-Datum:
-Dauer:
+Bearbeitete Story: US01
+Datum: 19.03.2023
+Dauer: 5h
 
 Bearbeitete Story:
 Datum:
