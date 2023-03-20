@@ -8,6 +8,7 @@ import {Owner} from 'src/app/dto/owner';
 import {Sex} from 'src/app/dto/sex';
 import {HorseService} from 'src/app/service/horse.service';
 import {OwnerService} from 'src/app/service/owner.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 
 export enum HorseCreateEditMode {
@@ -129,6 +130,23 @@ export class HorseCreateEditComponent implements OnInit {
       : `${owner.firstName} ${owner.lastName}`;
   }
 
+  public onDelete(): void {
+    if (!this.modeIsCreate && this.horse.id != null) {
+      const observable = this.service.delete(this.horse.id);
+
+      observable.subscribe({
+        next: () => {
+          this.notification.success(`Horse ${this.horse.name} successfully deleted.`);
+          this.router.navigate(['/horses']);
+        },
+        error: (error: HttpErrorResponse) => {
+          this.notification.error(`Error while deleting ${this.horse.name}: ${error.error.errors}`);
+          this.router.navigate(['/horses']);
+          console.error(`Error while deleting ${this.horse.name}: ${error.error.errors}`);
+        }
+      });
+    }
+  }
 
   public onSubmit(form: NgForm): void {
     console.log('is form valid?', form.valid, this.horse);

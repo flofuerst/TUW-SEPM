@@ -79,6 +79,11 @@ public class HorseServiceImpl implements HorseService {
     );
   }
 
+  @Override
+  public void delete(Long id) throws NotFoundException {
+    LOG.trace("delete({})", id);
+    dao.delete(id);
+  }
 
   @Override
   public HorseDetailDto getById(long id) throws NotFoundException {

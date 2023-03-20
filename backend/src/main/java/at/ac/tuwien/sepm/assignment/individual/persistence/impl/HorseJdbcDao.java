@@ -37,6 +37,7 @@ public class HorseJdbcDao implements HorseDao {
       + " WHERE id = ?";
 
   private static final String SQL_CREATE = "INSERT INTO " + TABLE_NAME + " (name, description, date_of_birth, sex, owner_id) VALUES (?, ?, ?, ?, ?)";
+  private static final String SQL_DELETE = "DELETE FROM " + TABLE_NAME + " WHERE id  ?";
   private final JdbcTemplate jdbcTemplate;
 
   public HorseJdbcDao(
@@ -122,6 +123,17 @@ public class HorseJdbcDao implements HorseDao {
         ;
   }
 
+  public void delete(Long id) throws NotFoundException {
+    LOG.trace("delete({})", id);
+
+    int deletedAmount = jdbcTemplate.update(SQL_DELETE, id);
+    if (deletedAmount == 0) {
+      throw new NotFoundException("Horse to delete with given id not found");
+    } else if (deletedAmount > 1) {
+      // This should never happen. If it does, something is wrong with the DB or the way the prepared statement is set up.
+      throw new FatalException("More than one horse deleted");
+    }
+  }
 
   private Horse mapRow(ResultSet result, int rownum) throws SQLException {
     return new Horse()

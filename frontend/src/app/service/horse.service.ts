@@ -61,4 +61,8 @@ export class HorseService {
     );
   }
 
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${baseUri}/${id}`);
+  }
+
 }
