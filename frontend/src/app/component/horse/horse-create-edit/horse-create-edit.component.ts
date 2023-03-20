@@ -100,14 +100,14 @@ export class HorseCreateEditComponent implements OnInit {
             error: error => {
               this.notification.error(`Error while retrieving horse`);
               this.router.navigate(['/horses']);
-              console.error('Error getting horse', error);
+              console.error(`Error getting horse with id "${this.route.snapshot.paramMap.get('id')}" (horse id not found)`, error);
               return;
             }
           });
         } else {
           this.notification.error(`Error while retrieving horse`);
           this.router.navigate(['/horses']);
-          console.error('Error getting horse');
+          console.error(`Error getting horse with id "${this.route.snapshot.paramMap.get('id')}" (horse id invalid)`);
           return;
         }
       }
