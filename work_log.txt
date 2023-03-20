@@ -8,9 +8,9 @@ Bearbeitete Story: US01
 Datum: 19.03.2023
 Dauer: 5h
 
-Bearbeitete Story:
-Datum:
-Dauer:
+Bearbeitete Story: US02
+Datum: 20.03.2023
+Dauer: 2h
 
 Bearbeitete Story:
 Datum:

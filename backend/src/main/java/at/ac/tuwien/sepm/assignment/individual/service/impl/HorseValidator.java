@@ -43,6 +43,8 @@ public class HorseValidator {
 
     if (horse.dateOfBirth() == null) {
       validationErrors.add("Date of birth of horse is not given");
+    } else if (horse.dateOfBirth().isAfter(LocalDate.now())) {
+      validationErrors.add("Date of birth is given but invalid: date of birth lies in the future");
     }
 
     if (horse.sex() == null) {

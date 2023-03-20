@@ -1,9 +1,8 @@
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {environment} from 'src/environments/environment';
 import {Horse} from '../dto/horse';
-import {Sex} from '../dto/sex';
 
 const baseUri = environment.backendUrl + '/horses';
 
@@ -14,7 +13,8 @@ export class HorseService {
 
   constructor(
     private http: HttpClient,
-  ) { }
+  ) {
+  }
 
   /**
    * Get all horses stored in the system
@@ -25,6 +25,28 @@ export class HorseService {
     return this.http.get<Horse[]>(baseUri);
   }
 
+  /**
+   * Get a horse by its specified id
+   *
+   * @param id the id of the wanted horse
+   * @return an Observable for the horse with specified id
+   */
+  get(id: number): Observable<Horse> {
+    return this.http.get<Horse>(`${baseUri}/${id}`);
+  }
+
+  /**
+   * Update an existing horse in the system
+   *
+   * @param horse the data for the horse that should be updated
+   * @return an Observable for the updated horse
+   */
+  update(horse: Horse): Observable<Horse> {
+    return this.http.put<Horse>(
+      `${baseUri}/${horse.id}`,
+      horse
+    );
+  }
 
   /**
    * Create a new horse in the system.
