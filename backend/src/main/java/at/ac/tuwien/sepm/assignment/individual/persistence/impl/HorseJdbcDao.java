@@ -138,12 +138,9 @@ public class HorseJdbcDao implements HorseDao {
   public void delete(Long id) throws NotFoundException {
     LOG.trace("delete({})", id);
 
-    int deletedAmount = jdbcTemplate.update(SQL_DELETE, id);
-    if (deletedAmount == 0) {
-      throw new NotFoundException("Horse to delete with given id not found");
-    } else if (deletedAmount > 1) {
-      // This should never happen. If it does, something is wrong with the DB or the way the prepared statement is set up.
-      throw new FatalException("More than one horse deleted");
+    int deleted = jdbcTemplate.update(SQL_DELETE, id);
+    if (deleted == 0) {
+      throw new NotFoundException("Could not delete horse with ID " + id + ", because it does not exist");
     }
   }
 
