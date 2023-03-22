@@ -14,6 +14,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 export enum HorseCreateEditMode {
   create,
   edit,
+  detailView
 };
 
 @Component({
@@ -40,6 +41,12 @@ export class HorseCreateEditComponent implements OnInit {
     private route: ActivatedRoute,
     private notification: ToastrService,
   ) {
+    // new initialization if change occurs
+    // this is for example needed when switching from /horses/detailView/idX to /horses/detailView/idY
+    // --> Component would not get refreshed if this paramMap subscription is missing
+    this.route.paramMap.subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
   public get heading(): string {
@@ -48,6 +55,8 @@ export class HorseCreateEditComponent implements OnInit {
         return 'Create New Horse';
       case HorseCreateEditMode.edit:
         return 'Update Horse';
+      case HorseCreateEditMode.detailView:
+        return 'Details of Horse';
       default:
         return '?';
     }
@@ -68,6 +77,9 @@ export class HorseCreateEditComponent implements OnInit {
     return this.mode === HorseCreateEditMode.create;
   }
 
+  get modeIsDetailView(): boolean {
+    return this.mode === HorseCreateEditMode.detailView;
+  }
 
   private get modeActionFinished(): string {
     switch (this.mode) {
@@ -92,7 +104,8 @@ export class HorseCreateEditComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.mode = data.mode;
 
-      if (this.mode === HorseCreateEditMode.edit) {
+      // retrieve data if in edit or detailView mode
+      if (this.mode === HorseCreateEditMode.edit || this.mode === HorseCreateEditMode.detailView) {
         const horseId = Number(this.route.snapshot.paramMap.get('id'));
 
         if (Number.isInteger(horseId)) {

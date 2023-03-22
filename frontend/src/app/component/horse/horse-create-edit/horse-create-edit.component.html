@@ -12,6 +12,10 @@
         </label>
         <div class="col-md-10 col-lg-8"
         >
+          <div class="col-form-label"
+               *ngIf="modeIsDetailView">
+            {{horse.name}}
+          </div>
           <input type="text"
                  id="horseName"
                  name="horseName"
@@ -19,6 +23,7 @@
                  class="form-control"
                  [class]="dynamicCssClassesForInput(horseNameModel)"
                  [(ngModel)]="horse.name"
+                 *ngIf="!modeIsDetailView"
                  #horseNameModel="ngModel"
                  required
           >
@@ -36,12 +41,17 @@
         </label>
         <div class="col-md-10 col-lg-8"
         >
+          <div class="col-form-label"
+               *ngIf="modeIsDetailView">
+            {{horse.dateOfBirth}}
+          </div>
           <input type="date"
                  id="horseDateOfBirth"
                  name="horseDateOfBirth"
                  class="form-control"
                  [class]="dynamicCssClassesForInput(horseDateOfBirthModel)"
                  [(ngModel)]="horse.dateOfBirth"
+                 *ngIf="!modeIsDetailView"
                  #horseDateOfBirthModel="ngModel"
                  required
           >
@@ -63,10 +73,15 @@
         </label>
         <div class="col-md-10 col-lg-8"
         >
+          <div class="col-form-label"
+               *ngIf="modeIsDetailView">
+            {{horse.sex | titlecase}}
+          </div>
           <select class="form-select"
                   id="horseSex"
                   name="horseSex"
                   [(ngModel)]="horse.sex"
+                  *ngIf="!modeIsDetailView"
                   required
           >
             <option value="FEMALE">Female</option>
@@ -81,16 +96,24 @@
         <label for="horseOwner" class="col-form-label text-md-end text-muted col-md-2 col-lg-4">
           Owner
         </label>
-        <app-autocomplete
-          id="horseOwner"
-          name="horseOwner"
-          class="col-md-10 col-lg-8"
-          textInputClass="form-control"
-          valueNeedsToMatchSuggestion="true"
-          [(ngModel)]="horse.owner"
-          [formatModel]="formatOwnerName"
-          [suggestions]="ownerSuggestions"
-        ></app-autocomplete>
+        <div class="col-md-10 col-lg-8"
+        >
+          <div class="col-form-label"
+               *ngIf="modeIsDetailView">
+            {{horse.owner}}
+          </div>
+          <app-autocomplete
+            id="horseOwner"
+            name="horseOwner"
+            class="col-md-10 col-lg-8"
+            textInputClass="form-control"
+            valueNeedsToMatchSuggestion="true"
+            [(ngModel)]="horse.owner"
+            [formatModel]="formatOwnerName"
+            [suggestions]="ownerSuggestions"
+            *ngIf="!modeIsDetailView"
+          ></app-autocomplete>
+        </div>
       </div>
     </div>
     <!-- End sex and owner row -->
@@ -103,16 +126,26 @@
         <label for="mother" class="col-form-label text-md-end text-muted col-md-2 col-lg-4">
           Mother
         </label>
-        <app-autocomplete
-          id="mother"
-          name="mother"
-          class="col-md-10 col-lg-8"
-          textInputClass="form-control"
-          valueNeedsToMatchSuggestion="true"
-          [(ngModel)]="horse.mother"
-          [formatModel]="formatParentName"
-          [suggestions]="parentSuggestions"
-        ></app-autocomplete>
+        <div class="col-md-10 col-lg-8"
+        >
+          <div class="col-form-label"
+               *ngIf="modeIsDetailView"
+               [routerLink]="['../', horse.mother?.id]">
+            {{horse.mother?.name}}
+          </div>
+          <app-autocomplete
+            id="mother"
+            name="mother"
+            class="col-md-10 col-lg-8"
+            textInputClass="form-control"
+            valueNeedsToMatchSuggestion="true"
+            [(ngModel)]="horse.mother"
+            [formatModel]="formatParentName"
+            [suggestions]="parentSuggestions"
+            *ngIf="!modeIsDetailView">
+            >
+          </app-autocomplete>
+        </div>
       </div>
     </div>
 
@@ -121,19 +154,28 @@
         <label for="father" class="col-form-label text-md-end text-muted col-md-2 col-lg-4">
           Father
         </label>
-        <app-autocomplete
-          id="father"
-          name="father"
-          class="col-md-10 col-lg-8"
-          textInputClass="form-control"
-          valueNeedsToMatchSuggestion="true"
-          [(ngModel)]="horse.father"
-          [formatModel]="formatParentName"
-          [suggestions]="parentSuggestions"
-        ></app-autocomplete>
+        <div class="col-md-10 col-lg-8"
+        >
+          <div class="col-form-label"
+               *ngIf="modeIsDetailView"
+               [routerLink]="['../', horse.father?.id]">
+            {{horse.father?.name}}
+          </div>
+          <app-autocomplete
+            id="father"
+            name="father"
+            class="col-md-10 col-lg-8"
+            textInputClass="form-control"
+            valueNeedsToMatchSuggestion="true"
+            [(ngModel)]="horse.father"
+            [formatModel]="formatParentName"
+            [suggestions]="parentSuggestions"
+            *ngIf="!modeIsDetailView"
+          ></app-autocomplete>
+        </div>
       </div>
     </div>
-    <!-- End sex and owner row -->
+    <!-- End mother and father row -->
   </div>
 
 
@@ -144,10 +186,15 @@
     </label>
     <div class="col-md-10"
     >
+      <div class="col-form-label"
+           *ngIf="modeIsDetailView">
+        {{horse.description}}
+      </div>
       <textarea class="form-control"
                 id="horseDescription"
                 name="horseDescription"
                 [(ngModel)]="horse.description"
+                *ngIf="!modeIsDetailView"
       >
       </textarea>
     </div>
@@ -165,10 +212,19 @@
     <span class="flex-grow-1"></span>
     <button type="submit"
             class="btn btn-primary"
+            *ngIf="!modeIsDetailView"
             [disabled]="!form.valid"
             type="submit"
     >
       {{submitButtonText}}
+    </button>
+    <button type="submit"
+            class="btn btn-sm responsive-warning-button"
+            *ngIf="modeIsDetailView"
+            [routerLink]="['../../edit', horse.id]"
+    >
+      <i class="bi bi-pencil"></i>
+      Edit
     </button>
   </div>
 </form>
