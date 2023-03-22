@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.lang.invoke.MethodHandles;
 import java.util.stream.Stream;
@@ -46,48 +45,30 @@ public class HorseEndpoint {
   }
 
   @GetMapping("{id}")
-  public HorseDetailDto getById(@PathVariable long id) {
+  public HorseDetailDto getById(@PathVariable long id) throws NotFoundException {
     LOG.info("GET " + BASE_PATH + "/{}", id);
-    try {
-      return service.getById(id);
-    } catch (NotFoundException e) {
-      HttpStatus status = HttpStatus.NOT_FOUND;
-      logClientError(status, "Horse to get details of not found", e);
-      throw new ResponseStatusException(status, e.getMessage(), e);
-    }
+    return service.getById(id);
   }
 
   @PutMapping("{id}")
-  public HorseDetailDto update(@PathVariable long id, @RequestBody HorseDetailDto toUpdate) throws ValidationException, ConflictException {
+  public HorseDetailDto update(@PathVariable long id, @RequestBody HorseDetailDto toUpdate) throws NotFoundException, ValidationException, ConflictException {
     LOG.info("PUT " + BASE_PATH + "/{}", toUpdate);
     LOG.debug("Body of request:\n{}", toUpdate);
-    try {
-      return service.update(toUpdate.withId(id));
-    } catch (NotFoundException e) {
-      HttpStatus status = HttpStatus.NOT_FOUND;
-      logClientError(status, "Horse to update not found", e);
-      throw new ResponseStatusException(status, e.getMessage(), e);
-    }
+    return service.update(toUpdate.withId(id));
   }
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public HorseDetailDto create(@RequestBody HorseCreateDto newHorse) throws ValidationException {
+  public HorseDetailDto create(@RequestBody HorseCreateDto newHorse) throws NotFoundException, ValidationException, ConflictException {
     LOG.info("POST " + BASE_PATH);
     LOG.debug("Body of request:\n{}", newHorse);
     return service.create(newHorse);
   }
 
   @DeleteMapping("{id}")
-  public void delete(@PathVariable long id) {
+  public void delete(@PathVariable long id) throws NotFoundException {
     LOG.info("DELETE " + BASE_PATH + "/{}", id);
-    try {
-      service.delete(id);
-    } catch (NotFoundException e) {
-      HttpStatus status = HttpStatus.NOT_FOUND;
-      logClientError(status, "Horse to delete not found", e);
-      throw new ResponseStatusException(status, e.getMessage(), e);
-    }
+    service.delete(id);
   }
 
   private void logClientError(HttpStatus status, String message, Exception e) {

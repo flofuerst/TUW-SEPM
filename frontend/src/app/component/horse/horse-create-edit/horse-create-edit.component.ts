@@ -29,7 +29,7 @@ export class HorseCreateEditComponent implements OnInit {
     description: '',
     // @ts-ignore
     dateOfBirth: null,
-    sex: Sex.female,
+    sex: Sex.female
   };
 
 
@@ -84,6 +84,10 @@ export class HorseCreateEditComponent implements OnInit {
     ? of([])
     : this.ownerService.searchByName(input, 5);
 
+  parentSuggestions = (input: string) => (input === '')
+    ? of([])
+    : this.service.searchByName(input, 5);
+
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       this.mode = data.mode;
@@ -128,6 +132,12 @@ export class HorseCreateEditComponent implements OnInit {
     return (owner == null)
       ? ''
       : `${owner.firstName} ${owner.lastName}`;
+  }
+
+  public formatParentName(horse: Horse | null | undefined): string {
+    return (horse == null)
+      ? ''
+      : horse.name;
   }
 
   public onDelete(): void {

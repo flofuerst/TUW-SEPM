@@ -61,21 +61,50 @@ public class HorseServiceImpl implements HorseService {
   @Override
   public HorseDetailDto update(HorseDetailDto horse) throws NotFoundException, ValidationException, ConflictException {
     LOG.trace("update({})", horse);
-    validator.validateForUpdate(horse);
-    var updatedHorse = dao.update(horse);
+
+    // get parents from database with id of parents
+    // this is used for validation if something is not okay in frontend and values of parents in request and database differ
+    Horse mother = horse.mother() != null ? dao.getById(horse.mother().id()) : null;
+    Horse father = horse.father() != null ? dao.getById(horse.father().id()) : null;
+    validator.validateForUpdate(
+        horse,
+        mother != null ? mapper.entityToListDto(mother, ownerMapForSingleId(mother.getOwnerId())) : null,
+        father != null ? mapper.entityToListDto(father, ownerMapForSingleId(father.getOwnerId())) : null
+    );
+    Horse updatedHorse = dao.update(horse);
+
+    // convert to dto again (with correct parents)
     return mapper.entityToDetailDto(
         updatedHorse,
-        ownerMapForSingleId(updatedHorse.getOwnerId()));
+        ownerMapForSingleId(updatedHorse.getOwnerId()),
+        mother,
+        father
+    );
   }
 
   @Override
-  public HorseDetailDto create(HorseCreateDto newHorse) throws ValidationException {
+  public HorseDetailDto create(HorseCreateDto newHorse)
+      throws NotFoundException, ValidationException, ConflictException {
     LOG.trace("create({})", newHorse);
-    validator.validateForCreate(newHorse);
-    var createHorse = dao.create(newHorse);
+
+    // get parents from database with id of parents
+    // this is used for validation if something is not okay in frontend and values of parents in request and database differ
+    Horse mother = newHorse.mother() != null ? dao.getById(newHorse.mother().id()) : null;
+    Horse father = newHorse.father() != null ? dao.getById(newHorse.father().id()) : null;
+
+    validator.validateForCreate(
+        newHorse,
+        mother != null ? mapper.entityToListDto(mother, ownerMapForSingleId(mother.getOwnerId())) : null,
+        father != null ? mapper.entityToListDto(father, ownerMapForSingleId(father.getOwnerId())) : null
+    );
+    Horse createdHorse = dao.create(newHorse);
+
+    // convert to dto again (with correct parents)
     return mapper.entityToDetailDto(
-        createHorse,
-        ownerMapForSingleId(createHorse.getOwnerId())
+        createdHorse,
+        ownerMapForSingleId(createdHorse.getOwnerId()),
+        mother,
+        father
     );
   }
 
@@ -89,9 +118,16 @@ public class HorseServiceImpl implements HorseService {
   public HorseDetailDto getById(long id) throws NotFoundException {
     LOG.trace("details({})", id);
     Horse horse = dao.getById(id);
+
+    // get parents from database with id of parents
+    // this is used for validation if something is not okay in frontend and values of parents in request and database differ
+    var mother = horse.getMotherId() != null ? dao.getById(horse.getMotherId()) : null;
+    var father = horse.getFatherId() != null ? dao.getById(horse.getFatherId()) : null;
     return mapper.entityToDetailDto(
         horse,
-        ownerMapForSingleId(horse.getOwnerId()));
+        ownerMapForSingleId(horse.getOwnerId()),
+        mother,
+        father);
   }
 
   private Map<Long, OwnerDto> ownerMapForSingleId(Long ownerId) {

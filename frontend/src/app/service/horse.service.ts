@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {environment} from 'src/environments/environment';
@@ -63,6 +63,13 @@ export class HorseService {
 
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${baseUri}/${id}`);
+  }
+
+  public searchByName(name: string, limitTo: number): Observable<Horse[]> {
+    const params = new HttpParams()
+      .set('name', name)
+      .set('maxAmount', limitTo);
+    return this.http.get<Horse[]>(baseUri, {params});
   }
 
 }

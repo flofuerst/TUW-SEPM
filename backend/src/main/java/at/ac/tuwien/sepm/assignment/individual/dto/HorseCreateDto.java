@@ -9,11 +9,25 @@ public record HorseCreateDto(
     String description,
     LocalDate dateOfBirth,
     Sex sex,
-    OwnerDto owner
+    OwnerDto owner,
+    HorseListDto mother,
+    HorseListDto father
 ) {
   public Long ownerId() {
     return owner == null
         ? null
         : owner.id();
+  }
+
+  public Long motherId() {
+    return mother == null
+        ? null
+        : mother.id();
+  }
+
+  public Long fatherId() {
+    return father == null
+        ? null
+        : father.id();
   }
 }
