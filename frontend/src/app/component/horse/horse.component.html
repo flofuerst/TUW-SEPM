@@ -31,7 +31,9 @@
   </a>
 </div>
 
-<form class="d-flex flex-row w-auto mb-3" (submit)="reloadHorses()">
+<form class="d-flex flex-row w-auto mb-3"
+      (submit)="reloadHorses()"
+      #inputForm="ngForm">
   <!-- this button is here, just so that simple submitting of this form
        to reload the horses, is possible -->
   <button type="submit" hidden="true">submit</button>
@@ -39,16 +41,20 @@
     <label for="searchHorseName" class="col-form-label">
       Name
     </label>
-    <input type="text" name="searchHorseName"
+    <input type="text"
+           name="searchHorseName"
            class="form-control"
+           [(ngModel)]="horseToSearch.name"
     >
   </div>
   <div class="flex-grow-1 ms-1">
     <label for="searchHorseDescription" class="col-form-label">
       Description
     </label>
-    <input type="text" name="searchHorseDescription"
+    <input type="text"
+           name="searchHorseDescription"
            class="form-control"
+           [(ngModel)]="horseToSearch.description"
     >
   </div>
   <div class="ms-1">
@@ -58,10 +64,12 @@
     <!-- pattern and placeholder are fallbacks for browser, that use a simple text input for type="date"
          The date format of the plain HTML date input, in browser that support it is, sadly, not changeable in a cross-browser way
       -->
-    <input type="date" name="searchHorseDateOfBirth"
+    <input type="date"
+           name="searchHorseDateOfBirth"
            pattern="\d{4}-\d{2}-\d{2}"
            placeholder="yyyy-mm-dd"
            class="form-control"
+           [(ngModel)]="horseToSearch.bornBefore"
     >
   </div>
   <div class="ms-1">
@@ -70,6 +78,7 @@
     </label>
     <select name="searchHorseSex"
             class="form-select"
+            [(ngModel)]="horseToSearch.sex"
     >
       <option></option>
       <option value="FEMALE">Female</option>
@@ -83,6 +92,9 @@
     <app-autocomplete name="searchHorseOwner"
                       textInputClass="form-control"
                       valueNeedsToMatchSuggestion="false"
+                      [(ngModel)]="horseToSearch.ownerName"
+                      [formatModel]="formatStringOwnerName"
+                      [suggestions]="ownerSuggestions"
     >
     </app-autocomplete>
   </div>
@@ -104,7 +116,7 @@
       <td>{{horse.description}}</td>
       <td>{{dateOfBirthAsLocaleDate(horse)}}</td>
       <td>{{horse.sex === 'FEMALE' ? 'Female' : 'Male'}}</td>
-      <td>{{ownerName(horse.owner)}}</td>
+      <td>{{formatObjectOwnerName(horse.owner)}}</td>
       <td>
         <div class="btn-group">
           <a class="btn btn-sm responsive-danger-button"

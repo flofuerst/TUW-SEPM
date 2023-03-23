@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.assignment.individual.service;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseCreateDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseDetailDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseListDto;
+import at.ac.tuwien.sepm.assignment.individual.dto.HorseSearchDto;
 import at.ac.tuwien.sepm.assignment.individual.exception.ConflictException;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
@@ -13,12 +14,20 @@ import java.util.stream.Stream;
  * Service for working with horses.
  */
 public interface HorseService {
+
   /**
    * Lists all horses stored in the system.
    *
    * @return list of all stored horses
    */
   Stream<HorseListDto> allHorses();
+
+  /**
+   * Lists all horses which match with the specified HorseSearchDto stored in the system.
+   *
+   * @return a list of all matching stored horses
+   */
+  Stream<HorseListDto> getSpecifiedHorses(HorseSearchDto horseSearchDto);
 
 
   /**

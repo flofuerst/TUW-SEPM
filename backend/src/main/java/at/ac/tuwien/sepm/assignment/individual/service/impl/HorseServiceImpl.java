@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.assignment.individual.service.impl;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseCreateDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseDetailDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseListDto;
+import at.ac.tuwien.sepm.assignment.individual.dto.HorseSearchDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.OwnerDto;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.ConflictException;
@@ -43,6 +44,24 @@ public class HorseServiceImpl implements HorseService {
   public Stream<HorseListDto> allHorses() {
     LOG.trace("allHorses()");
     var horses = dao.getAll();
+    var ownerIds = horses.stream()
+        .map(Horse::getOwnerId)
+        .filter(Objects::nonNull)
+        .collect(Collectors.toUnmodifiableSet());
+    Map<Long, OwnerDto> ownerMap;
+    try {
+      ownerMap = ownerService.getAllById(ownerIds);
+    } catch (NotFoundException e) {
+      throw new FatalException("Horse, that is already persisted, refers to non-existing owner", e);
+    }
+    return horses.stream()
+        .map(horse -> mapper.entityToListDto(horse, ownerMap));
+  }
+
+  @Override
+  public Stream<HorseListDto> getSpecifiedHorses(HorseSearchDto horseSearchDto) {
+    LOG.trace("getSpecifiedHorses()");
+    var horses = dao.searchHorses(horseSearchDto);
     var ownerIds = horses.stream()
         .map(Horse::getOwnerId)
         .filter(Objects::nonNull)

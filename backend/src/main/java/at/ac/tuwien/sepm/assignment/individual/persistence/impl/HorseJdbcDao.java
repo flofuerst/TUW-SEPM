@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseCreateDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseDetailDto;
+import at.ac.tuwien.sepm.assignment.individual.dto.HorseSearchDto;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.FatalException;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
@@ -10,6 +11,8 @@ import at.ac.tuwien.sepm.assignment.individual.type.Sex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
@@ -52,6 +55,54 @@ public class HorseJdbcDao implements HorseDao {
   public List<Horse> getAll() {
     LOG.trace("getAll()");
     return jdbcTemplate.query(SQL_SELECT_ALL, this::mapRow);
+  }
+
+  @Override
+  public List<Horse> searchHorses(HorseSearchDto horseSearchDto) {
+    LOG.trace("searchHorses()");
+    MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+
+    // base of search String
+    // 1=1 is needed to append 'AND' keywords to string
+    // the base String without any 'AND' keywords
+    // is the same operation as the SELECT statement without the WHERE clause
+    String search = "SELECT * FROM " + TABLE_NAME + " WHERE 1=1 ";
+
+    // add specified parts of search to SQL_SEARCH String
+    // NamedParameterJdbcTemplate and MapSqlParameterSource is used to add parameters easier
+    // --> query build up with '?' would be more confusing
+    if (horseSearchDto.name() != null) {
+      search += " AND UPPER(name) LIKE :name";
+      namedParameters.addValue("name", "%" + horseSearchDto.name().toUpperCase() + "%");
+    }
+
+    if (horseSearchDto.description() != null) {
+      search += " AND UPPER(description) LIKE :description";
+      namedParameters.addValue("description", "%" + horseSearchDto.description().toUpperCase() + "%");
+    }
+
+    if (horseSearchDto.bornBefore() != null) {
+      search += " AND date_of_birth < :bornBefore";
+      namedParameters.addValue("bornBefore", horseSearchDto.bornBefore());
+    }
+
+    if (horseSearchDto.sex() != null) {
+      search += " AND sex = :sex";
+      namedParameters.addValue("sex", horseSearchDto.sex().name());
+    }
+
+    if (horseSearchDto.ownerName() != null) {
+      search += " AND owner_id IN (SELECT id FROM owner WHERE UPPER(first_name) LIKE :ownerName OR "
+          + "UPPER(last_name) LIKE :ownerName)";
+      namedParameters.addValue("ownerName", "%" + horseSearchDto.ownerName().toUpperCase() + "%");
+    }
+
+    NamedParameterJdbcTemplate searchTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
+    return searchTemplate.query(
+        search,
+        namedParameters,
+        this::mapRow
+    );
   }
 
   @Override
