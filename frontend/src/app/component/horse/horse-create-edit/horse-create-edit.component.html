@@ -130,8 +130,10 @@
         >
           <div class="col-form-label"
                *ngIf="modeIsDetailView"
-               [routerLink]="['../', horse.mother?.id]">
-            {{horse.mother?.name}}
+               [routerLink]="['../', horse.mother?.id]"
+               aria-label="Show details of mother horse"
+          >
+            {{horse.mother?.name}} <i *ngIf="horse.mother?.name" class="bi bi-info-lg"></i>
           </div>
           <app-autocomplete
             id="mother"
@@ -158,8 +160,10 @@
         >
           <div class="col-form-label"
                *ngIf="modeIsDetailView"
-               [routerLink]="['../', horse.father?.id]">
-            {{horse.father?.name}}
+               [routerLink]="['../', horse.father?.id]"
+               aria-label="Show details of father horse"
+          >
+            {{horse.father?.name}} <i *ngIf="horse.father?.name" class="bi bi-info-lg"></i>
           </div>
           <app-autocomplete
             id="father"
@@ -205,6 +209,7 @@
             class="btn btn-danger"
             *ngIf="!modeIsCreate"
             (click)="onDelete()"
+            aria-label="Delete horse"
     >
       <i class="bi bi-trash"></i>
       Delete
@@ -214,6 +219,7 @@
             class="btn btn-primary"
             *ngIf="!modeIsDetailView"
             [disabled]="!form.valid"
+            attr.aria-label="{{submitButtonText + ' horse'}}"
             type="submit"
     >
       {{submitButtonText}}
@@ -221,10 +227,10 @@
     <button type="submit"
             class="btn btn-sm responsive-warning-button"
             *ngIf="modeIsDetailView"
+            aria-label="Edit horse"
             [routerLink]="['../../edit', horse.id]"
     >
-      <i class="bi bi-pencil"></i>
-      Edit
+      Edit horse <i class="bi bi-pencil"></i>
     </button>
   </div>
 </form>
