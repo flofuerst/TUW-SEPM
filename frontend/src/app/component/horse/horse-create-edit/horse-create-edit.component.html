@@ -100,7 +100,7 @@
         >
           <div class="col-form-label"
                *ngIf="modeIsDetailView">
-            {{horse.owner}}
+            {{horse.owner.firstName + ' ' + horse.owner.lastName}}
           </div>
           <app-autocomplete
             id="horseOwner"

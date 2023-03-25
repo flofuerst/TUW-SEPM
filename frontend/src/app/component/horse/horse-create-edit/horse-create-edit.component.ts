@@ -190,7 +190,7 @@ export class HorseCreateEditComponent implements OnInit {
           return;
       }
       observable.subscribe({
-        next: data => {
+        next: () => {
           this.notification.success(`Horse ${this.horse.name} successfully ${this.modeActionFinished}.`);
           this.router.navigate(['/horses']);
         },

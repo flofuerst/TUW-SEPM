@@ -76,7 +76,7 @@ public class HorseMapper {
   private OwnerDto getOwner(Horse horse, Map<Long, OwnerDto> owners) {
     OwnerDto owner = null;
     var ownerId = horse.getOwnerId();
-    if (ownerId != null) {
+    if (ownerId != null && owners != null) {
       if (!owners.containsKey(ownerId)) {
         throw new FatalException("Given owner map does not contain owner of this Horse (%d)".formatted(horse.getId()));
       }

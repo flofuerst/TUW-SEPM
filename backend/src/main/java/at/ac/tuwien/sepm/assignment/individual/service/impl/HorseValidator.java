@@ -102,13 +102,6 @@ public class HorseValidator {
     validateDateOfBirth(horse.dateOfBirth(), validationErrors);
     validateSex(horse.sex(), validationErrors);
 
-    //TODO: Validate owner
-    //    if (newHorse.owner() != null) {
-    //      if (newHorse.owner().firstName().isBlank() || newHorse.owner().lastName().isBlank()) {
-    //        validationErrors.add("Owner of horse is given but blank");
-    //      }
-    //    }
-
     if (!validationErrors.isEmpty()) {
       throw new ValidationException("Validation of horse for update failed", validationErrors);
     }
@@ -133,13 +126,6 @@ public class HorseValidator {
     validateDescription(newHorse.description(), validationErrors);
     validateDateOfBirth(newHorse.dateOfBirth(), validationErrors);
     validateSex(newHorse.sex(), validationErrors);
-
-    //TODO: Validate owner
-    //    if (newHorse.owner() != null) {
-    //      if (newHorse.owner().firstName().isBlank() || newHorse.owner().lastName().isBlank()) {
-    //        validationErrors.add("Owner of horse is given but blank");
-    //      }
-    //    }
 
     if (!validationErrors.isEmpty()) {
       throw new ValidationException("Validation of horse for create failed", validationErrors);

@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.assignment.individual.service;
 import at.ac.tuwien.sepm.assignment.individual.dto.OwnerCreateDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.OwnerDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.OwnerSearchDto;
+import at.ac.tuwien.sepm.assignment.individual.exception.ConflictException;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
 
@@ -42,15 +43,18 @@ public interface OwnerService {
    *
    * @param searchParameters object containing the search parameters to match
    * @return a stream containing owners matching the criteria in {@code searchParameters}
+   * @throws NotFoundException if the owner does not exist in the persistent data store
    */
-  Stream<OwnerDto> search(OwnerSearchDto searchParameters);
+  Stream<OwnerDto> search(OwnerSearchDto searchParameters) throws NotFoundException;
 
   /**
    * Create a new owner in the persistent data store.
    *
    * @param newOwner the data for the new owner
    * @return the owner, that was just newly created in the persistent data store
+   * @throws NotFoundException   if the owner does not exist in the persistent data store
    * @throws ValidationException if the create data given for the owner is in itself incorrect (no name, invalid email, ...)
+   * @throws ConflictException   if the data given for the owner creation is in conflict with the data currently in the system
    */
-  OwnerDto create(OwnerCreateDto newOwner) throws ValidationException;
+  OwnerDto create(OwnerCreateDto newOwner) throws NotFoundException, ValidationException, ConflictException;
 }

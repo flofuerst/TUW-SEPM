@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.assignment.individual.dto.OwnerCreateDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.OwnerSearchDto;
 import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
+
 import java.util.Collection;
 
 /**
@@ -21,6 +22,14 @@ public interface OwnerDao {
   Owner getById(long id) throws NotFoundException;
 
   /**
+   * Fetch an owner from the persistent data store by its email and check if specified email already exists.
+   *
+   * @param email the email which gets checked
+   * @return the result of the check if the specified email already exists
+   */
+  boolean emailExists(String email);
+
+  /**
    * Fetch a set of owners by their IDs from the persistent data store.
    * This is best effort, if some owner can not be found in the data store, it is simply not in the returned set.
    *
@@ -34,7 +43,7 @@ public interface OwnerDao {
    * <p>
    * A owner is considered matched, if its name contains {@code searchParameters.name} as a substring.
    * The returned stream of owners never contains more than {@code searchParameters.maxAmount} elements,
-   *  even if there would be more matches in the persistent data store.
+   * even if there would be more matches in the persistent data store.
    * </p>
    *
    * @param searchParameters object containing the search parameters to match

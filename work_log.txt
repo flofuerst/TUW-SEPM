@@ -21,16 +21,16 @@ Datum: 21.03.2023, 22.03.2023
 Dauer: 5h 45min
 
 Bearbeitete Story: US05
-Datum: 22.03.2023
-Dauer: 2h 30min
+Datum: 22.03.2023, 24.03.2023
+Dauer: 3h
 
 Bearbeitete Story: US06
 Datum: 23.03.2023
 Dauer: 7h 15min
 
-Bearbeitete Story:
-Datum:
-Dauer:
+Bearbeitete Story: US07
+Datum: 24.03.2023, 25.03.2023
+Dauer: 4h 15min
 
 Bearbeitete Story:
 Datum:

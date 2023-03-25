@@ -22,4 +22,17 @@ export class OwnerService {
       .set('maxAmount', limitTo);
     return this.http.get<Owner[]>(baseUri, {params});
   }
+
+  /**
+   * Create a new owner in the system.
+   *
+   * @param owner the data for the owner that should be created
+   * @return an Observable for the created owner
+   */
+  create(owner: Owner): Observable<Owner> {
+    return this.http.post<Owner>(
+      baseUri,
+      owner
+    );
+  }
 }

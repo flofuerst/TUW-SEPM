@@ -1,0 +1,96 @@
+<h1 class="display-1">Create New Owner</h1>
+
+<form #form="ngForm" (ngSubmit)="onSubmit(form)">
+  <div class="row">
+    <!-- Start first name and last name row  -->
+    <div class="mb-2 col-lg-6">
+      <!-- When nesting rows, always make row > col-* > row. The Bootstrap classes do not work right when an element is both col* and row -->
+      <div class="row">
+        <label for="firstName" class="col-form-label text-md-end text-muted col-md-2 col-lg-4">
+          First name
+        </label>
+        <div class="col-md-10 col-lg-8"
+        >
+          <input type="text"
+                 id="firstName"
+                 name="firstName"
+                 placeholder="First name"
+                 class="form-control"
+                 [class]="dynamicCssClassesForInput(firstNameModel)"
+                 [(ngModel)]="owner.firstName"
+                 #firstNameModel="ngModel"
+                 required
+          >
+          <div class="invalid-feedback">
+            <!-- This is shown, when the form validation deems the name input to be invalid -->
+            First name is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mb-2 col-lg-6">
+      <!-- When nesting rows, always make row > col-* > row. The Bootstrap classes do not work right when an element is both col* and row -->
+      <div class="row">
+        <label for="lastName" class="col-form-label text-md-end text-muted col-md-2 col-lg-4">
+          Last name
+        </label>
+        <div class="col-md-10 col-lg-8"
+        >
+          <input type="text"
+                 id="lastName"
+                 name="lastName"
+                 placeholder="Last name"
+                 class="form-control"
+                 [class]="dynamicCssClassesForInput(lastNameModel)"
+                 [(ngModel)]="owner.lastName"
+                 #lastNameModel="ngModel"
+                 required
+          >
+          <div class="invalid-feedback">
+            <!-- This is shown, when the form validation deems the name input to be invalid -->
+            Last name is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End first name and last name row -->
+  </div>
+
+  <div class="row">
+    <!-- Start email row -->
+    <div class="mb-2 col-lg-6">
+      <!-- When nesting rows, always make row > col-* > row. The Bootstrap classes do not work right when an element is both col* and row -->
+      <div class="row">
+        <label for="email" class="col-form-label text-md-end text-muted col-md-2 col-lg-4">
+          Email
+        </label>
+        <div class="col-md-10 col-lg-8"
+        >
+          <input type="text"
+                 id="email"
+                 name="email"
+                 placeholder="Email"
+                 class="form-control"
+                 [class]="dynamicCssClassesForInput(emailModel)"
+                 [(ngModel)]="owner.email"
+                 #emailModel="ngModel"
+          >
+        </div>
+      </div>
+    </div>
+    <!-- End email row -->
+  </div>
+
+
+  <div class="mt-4 d-flex flex-row">
+    <span class="flex-grow-1"></span>
+    <button type="submit"
+            class="btn btn-primary"
+            [disabled]="!form.valid"
+            attr.aria-label="Create Owner"
+            type="submit"
+    >
+      Create
+    </button>
+  </div>
+</form>
