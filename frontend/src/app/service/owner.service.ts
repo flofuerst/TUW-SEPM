@@ -23,6 +23,10 @@ export class OwnerService {
     return this.http.get<Owner[]>(baseUri, {params});
   }
 
+  getAll(): Observable<Owner[]> {
+    return this.http.get<Owner[]>(baseUri);
+  }
+
   /**
    * Create a new owner in the system.
    *

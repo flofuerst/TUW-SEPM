@@ -9,7 +9,7 @@ spring:
   application:
     name: wendys-family-tree
   datasource:
-    url: "jdbc:h2:./wendydb;AUTO_SERVER=TRUE;INIT=RUNSCRIPT FROM 'classpath:sql/createSchema.sql'"
+    url: "jdbc:h2:/Users/florianfuerst/Desktop/Studium/4.Semester/Software_und_Projektmanagement/template-java/backend/wendydb;AUTO_SERVER=TRUE;INIT=RUNSCRIPT FROM 'classpath:sql/createSchema.sql'"
     username: "sa"
     password: ""
     driver-class-name: org.h2.Driver

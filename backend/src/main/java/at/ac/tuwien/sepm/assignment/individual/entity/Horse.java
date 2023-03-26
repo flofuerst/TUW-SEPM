@@ -61,8 +61,7 @@ public class Horse {
     this.sex = sex;
     return this;
   }
-
-
+  
   public Long getOwnerId() {
     return ownerId;
   }

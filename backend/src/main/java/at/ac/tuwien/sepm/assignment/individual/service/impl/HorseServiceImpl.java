@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -91,11 +92,12 @@ public class HorseServiceImpl implements HorseService {
         father != null ? mapper.entityToListDto(father, ownerMapForSingleId(father.getOwnerId())) : null
     );
     Horse updatedHorse = dao.update(horse);
+    Map<Long, OwnerDto> owners = ownerMapWithParents(updatedHorse.getOwnerId(), mother, father);
 
     // convert to dto again (with correct parents)
     return mapper.entityToDetailDto(
         updatedHorse,
-        ownerMapForSingleId(updatedHorse.getOwnerId()),
+        owners,
         mother,
         father
     );
@@ -117,11 +119,12 @@ public class HorseServiceImpl implements HorseService {
         father != null ? mapper.entityToListDto(father, ownerMapForSingleId(father.getOwnerId())) : null
     );
     Horse createdHorse = dao.create(newHorse);
+    Map<Long, OwnerDto> owners = ownerMapWithParents(createdHorse.getOwnerId(), mother, father);
 
     // convert to dto again (with correct parents)
     return mapper.entityToDetailDto(
         createdHorse,
-        ownerMapForSingleId(createdHorse.getOwnerId()),
+        owners,
         mother,
         father
     );
@@ -140,13 +143,45 @@ public class HorseServiceImpl implements HorseService {
 
     // get parents from database with id of parents
     // this is used for validation if something is not okay in frontend and values of parents in request and database differ
-    var mother = horse.getMotherId() != null ? dao.getById(horse.getMotherId()) : null;
-    var father = horse.getFatherId() != null ? dao.getById(horse.getFatherId()) : null;
+    Horse mother = horse.getMotherId() != null ? dao.getById(horse.getMotherId()) : null;
+    Horse father = horse.getFatherId() != null ? dao.getById(horse.getFatherId()) : null;
+    Map<Long, OwnerDto> owners = ownerMapWithParents(horse.getOwnerId(), mother, father);
+
     return mapper.entityToDetailDto(
         horse,
-        ownerMapForSingleId(horse.getOwnerId()),
+        owners,
         mother,
         father);
+  }
+
+  private Map<Long, OwnerDto> ownerMapWithParents(Long ownerId, Horse mother, Horse father) throws NotFoundException {
+    if (ownerId == null) {
+      return null;
+    }
+
+    Map<Long, OwnerDto> owners = new HashMap<>();
+    try {
+      owners.put(ownerId, ownerService.getById(ownerId));
+    } catch (NotFoundException e) {
+      throw new FatalException("Owner %d referenced by horse not found".formatted(ownerId));
+    }
+
+    if (mother != null && mother.getOwnerId() != null) {
+      try {
+        owners.put(mother.getOwnerId(), ownerService.getById(mother.getOwnerId()));
+      } catch (NotFoundException e) {
+        throw new FatalException("Owner %d referenced by mother horse not found".formatted(mother.getOwnerId()));
+      }
+    }
+    if (father != null && father.getOwnerId() != null) {
+      try {
+        owners.put(father.getOwnerId(), ownerService.getById(father.getOwnerId()));
+      } catch (NotFoundException e) {
+        throw new FatalException("Owner %d referenced by father horse not found".formatted(father.getOwnerId()));
+      }
+    }
+
+    return owners;
   }
 
   private Map<Long, OwnerDto> ownerMapForSingleId(Long ownerId) {
