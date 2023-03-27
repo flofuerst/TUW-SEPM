@@ -1,0 +1,55 @@
+@use "sass:map";
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
+
+.parents-offset {
+  padding-left: 1.5em;
+}
+
+// redefine margin to the right
+.mr-3 {
+  margin-right: 10px;
+}
+
+.btn-expand {
+  padding: 2px 5px;
+
+  margin-right: 6px;
+}
+
+.border.expanded {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+
+  .text-left {
+    text-align: left;
+    margin-right: auto;
+  }
+
+  .text-right {
+    text-align: right;
+    margin-left: auto;
+  }
+}
+
+// make buttons responsive
+.responsive-info-button, .responsive-warning-button, .responsive-danger-button, .responsive-dark-button, .responsive-tree-button {
+  @include button-variant($light, $light);
+}
+
+@each $color in (info, warning, danger) {
+  $value: map.get($theme-colors, $color);
+  tr:hover.responsive-#{$color}-button {
+    @include button-variant($value, $value);
+  }
+}
+
+@each $color in (info, warning, danger) {
+  $value: map.get($theme-colors, $color);
+  a:hover.responsive-#{$color}-button {
+    @include button-variant($value, $value);
+  }
+}

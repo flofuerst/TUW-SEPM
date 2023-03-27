@@ -1,0 +1,26 @@
+<h1 class="display-1">Family Tree</h1>
+<div class="d-flex flex-row w-auto">
+  <button
+    class="btn btn-primary mr-1"
+    (click)="loadFamilyTree()"
+    aria-label="Reload family tree"
+  >
+    <i class="bi bi-arrow-clockwise"></i>
+    Reload
+  </button>
+  <div class="ms-1">
+    <input
+      type="number"
+      class="form-control"
+      [(ngModel)]="maxGenerations"
+      min="1"
+    />
+  </div>
+</div>
+
+<div class="mt-3 mb-3">
+  <app-horse-familytree-node
+    *ngIf="horseFamilyTree | async as horseFamilyTree"
+    [horse]="horseFamilyTree">
+  </app-horse-familytree-node>
+</div>

@@ -1,0 +1,47 @@
+<div>
+  <div class="border rounded expanded d-flex align-items-center justify-content-start">
+    <div class="border border-secondary rounded expand-icon btn-expand"
+         role="button"
+         (click)="changeExpandState()">
+      <i class="bi bi-chevron-down"></i>
+    </div>
+    <div class="text-left">
+      {{horse.name}} <i class="{{sexToSymbol(horse)}}"></i>
+    </div>
+    <div class="text-right">
+      <div class="d-inline-block mr-3">
+        {{dateOfBirthAsLocaleDate(horse)}}
+      </div>
+      <div class="btn-group d-inline-block">
+        <a [routerLink]="['../../detailView', horse.id]"
+           aria-label="Show horse details"
+           class="btn btn-sm responsive-info-button">
+          <i class="bi bi-info-lg"></i>
+        </a>
+        <a [routerLink]="['../../edit', horse.id]"
+           aria-label="Edit horse"
+           class="btn btn-sm responsive-warning-button">
+          <i class="bi bi-pencil"></i>
+        </a>
+        <a (click)="delete(horse)"
+           aria-label="Delete horse"
+           class="btn btn-sm responsive-danger-button">
+          <i class="bi bi-trash"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!--  create new sub-familyTree if parents existing  -->
+  <div class="parents-offset">
+    <app-horse-familytree-node
+      [hidden]="isExpanded"
+      *ngIf="horse && horse.mother"
+      [horse]="horse.mother"
+    ></app-horse-familytree-node>
+    <app-horse-familytree-node
+      [hidden]="isExpanded"
+      *ngIf="horse && horse.father"
+      [horse]="horse.father"
+    ></app-horse-familytree-node>
+  </div>
+</div>
