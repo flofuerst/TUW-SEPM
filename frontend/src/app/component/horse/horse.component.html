@@ -24,6 +24,7 @@
       Name
     </label>
     <input type="text"
+           id="searchHorseName"
            name="searchHorseName"
            class="form-control"
            [(ngModel)]="horseToSearch.name"
@@ -34,6 +35,7 @@
       Description
     </label>
     <input type="text"
+           id="searchHorseDescription"
            name="searchHorseDescription"
            class="form-control"
            [(ngModel)]="horseToSearch.description"
@@ -47,6 +49,7 @@
          The date format of the plain HTML date input, in browser that support it is, sadly, not changeable in a cross-browser way
       -->
     <input type="date"
+           id="searchHorseDateOfBirth"
            name="searchHorseDateOfBirth"
            pattern="\d{4}-\d{2}-\d{2}"
            placeholder="yyyy-mm-dd"
@@ -58,7 +61,8 @@
     <label for="searchHorseSex" class="col-form-label">
       Sex
     </label>
-    <select name="searchHorseSex"
+    <select id="searchHorseSex"
+            name="searchHorseSex"
             class="form-select"
             [(ngModel)]="horseToSearch.sex"
     >
@@ -71,7 +75,8 @@
     <label for="searchHorseOwner" class="col-form-label">
       Owner
     </label>
-    <app-autocomplete name="searchHorseOwner"
+    <app-autocomplete id="searchHorseOwner"
+                      name="searchHorseOwner"
                       textInputClass="form-control"
                       valueNeedsToMatchSuggestion="false"
                       [(ngModel)]="horseToSearch.ownerName"
