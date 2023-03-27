@@ -51,3 +51,7 @@ Dauer: 45min
 Bearbeitete Story: TS24
 Datum: 27.07.2023
 Dauer: 15min
+
+Bearbeitete Story: TS13
+Datum: 27.07.2023
+Dauer: 2h 45min
