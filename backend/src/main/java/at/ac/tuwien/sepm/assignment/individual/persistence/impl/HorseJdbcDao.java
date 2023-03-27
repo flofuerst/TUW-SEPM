@@ -66,7 +66,7 @@ public class HorseJdbcDao implements HorseDao {
 
   @Override
   public List<Horse> searchHorses(HorseSearchDto horseSearchDto) {
-    LOG.trace("searchHorses()");
+    LOG.trace("searchHorses({})", horseSearchDto);
     MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 
     // base of search String

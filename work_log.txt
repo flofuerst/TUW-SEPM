@@ -44,3 +44,6 @@ Bearbeitete Story: TS28
 Datum: 27.07.2023
 Dauer: 1h
 
+Bearbeitete Story: TS10
+Datum: 27.07.2023
+Dauer: 45min

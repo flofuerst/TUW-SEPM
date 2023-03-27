@@ -18,7 +18,7 @@ public class OwnerValidator {
   private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
   public void validateForCreate(OwnerCreateDto newOwner, boolean emailExists) throws ValidationException, ConflictException {
-    LOG.trace("validateForCreate({})", newOwner);
+    LOG.trace("validateForCreate({}, {})", newOwner, emailExists);
     List<String> validationErrors = new ArrayList<>();
 
 

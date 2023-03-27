@@ -63,7 +63,7 @@ public class HorseServiceImpl implements HorseService {
 
   @Override
   public Stream<HorseListDto> getSpecifiedHorses(HorseSearchDto horseSearchDto) {
-    LOG.trace("getSpecifiedHorses()");
+    LOG.trace("getSpecifiedHorses({})", horseSearchDto);
     var horses = dao.searchHorses(horseSearchDto);
     var ownerIds = horses.stream()
         .map(Horse::getOwnerId)
@@ -140,7 +140,7 @@ public class HorseServiceImpl implements HorseService {
 
   @Override
   public HorseDetailDto getById(long id) throws NotFoundException {
-    LOG.trace("details({})", id);
+    LOG.trace("getById({})", id);
     Horse horse = dao.getById(id);
 
     // get parents from database with id of parents
@@ -180,6 +180,7 @@ public class HorseServiceImpl implements HorseService {
   }
 
   private Map<Long, OwnerDto> ownerMapWithParents(Long ownerId, Horse mother, Horse father) throws NotFoundException {
+    LOG.trace("ownerMapWithParents({}, {}, {})", ownerId, mother, father);
     if (ownerId == null) {
       return null;
     }
@@ -210,6 +211,7 @@ public class HorseServiceImpl implements HorseService {
   }
 
   private Map<Long, OwnerDto> ownerMapForSingleId(Long ownerId) {
+    LOG.trace("ownerMapForSingleId({})", ownerId);
     try {
       return ownerId == null
           ? null

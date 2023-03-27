@@ -90,7 +90,7 @@ public class HorseValidator {
   }
 
   public void validateForUpdate(HorseDetailDto horse, HorseListDto mother, HorseListDto father) throws ValidationException, ConflictException {
-    LOG.trace("validateForUpdate({})", horse);
+    LOG.trace("validateForUpdate({}, {}, {})", horse, mother, father);
     List<String> validationErrors = new ArrayList<>();
 
     // call sub-methods to prevent code-duplication --> could be done in one big methode with many parameters
@@ -116,7 +116,7 @@ public class HorseValidator {
   }
 
   public void validateForCreate(HorseCreateDto newHorse, HorseListDto mother, HorseListDto father) throws ValidationException, ConflictException {
-    LOG.trace("validateForCreate({})", newHorse);
+    LOG.trace("validateForCreate({}, {}, {})", newHorse, mother, father);
     List<String> validationErrors = new ArrayList<>();
 
     // call sub-methods to prevent code-duplication --> could be done in one big methode with many parameters

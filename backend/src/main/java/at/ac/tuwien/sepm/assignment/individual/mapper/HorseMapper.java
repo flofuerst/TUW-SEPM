@@ -114,6 +114,13 @@ public class HorseMapper {
     );
   }
 
+  /**
+   * Convert the owners of the specified horse to a {@link OwnerDto}.
+   *
+   * @param horse  the horse to get the owner from
+   * @param owners a map of horse owners by their id, which needs to contain the owner referenced by {@code horse}
+   * @return the converted {@link OwnerDto}
+   */
   private OwnerDto getOwner(Horse horse, Map<Long, OwnerDto> owners) {
     OwnerDto owner = null;
     var ownerId = horse.getOwnerId();
