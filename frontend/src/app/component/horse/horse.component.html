@@ -1,5 +1,8 @@
 <div class="d-flex flex-row w-auto">
-  <button class="btn btn-primary mr-1" (click)="reloadHorses()" aria-label="Reload horses">
+  <button class="btn btn-primary mr-1"
+          (click)="reloadHorses()"
+          aria-label="Reload horses"
+  >
     <i class="bi bi-arrow-clockwise"></i>
     Reload
   </button>
@@ -98,20 +101,25 @@
       <td>{{formatObjectOwnerName(horse.owner)}}</td>
       <td>
         <div class="btn-group">
-          <a class="btn btn-sm responsive-danger-button"
-             aria-label="Delete horse"
-             (click)="deleteHorse(horse)">
-            <i class="bi bi-trash"></i>
-          </a>
           <a class="btn btn-sm responsive-info-button"
              [routerLink]="['detailView', horse.id]"
              aria-label="Show horse details">
             <i class="bi bi-info-lg"></i>
           </a>
+          <a class="btn btn-sm responsive-tree-button"
+             [routerLink]="[ horse.id, 'familytree']"
+             aria-label="Show family tree of horse">
+            <i class="bi bi-list"></i>
+          </a>
           <a class="btn btn-sm responsive-warning-button"
              [routerLink]="['edit', horse.id]"
              aria-label="Edit horse">
             <i class="bi bi-pencil"></i>
+          </a>
+          <a class="btn btn-sm responsive-danger-button"
+             aria-label="Delete horse"
+             (click)="deleteHorse(horse)">
+            <i class="bi bi-trash"></i>
           </a>
         </div>
       </td>

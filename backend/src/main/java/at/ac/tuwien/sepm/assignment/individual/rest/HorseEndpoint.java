@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.assignment.individual.dto.HorseCreateDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseDetailDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseListDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseSearchDto;
+import at.ac.tuwien.sepm.assignment.individual.dto.HorseTreeDto;
 import at.ac.tuwien.sepm.assignment.individual.exception.ConflictException;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,7 +41,7 @@ public class HorseEndpoint {
   @GetMapping
   public Stream<HorseListDto> searchHorses(HorseSearchDto searchParameters) {
     LOG.info("GET " + BASE_PATH);
-    LOG.debug("request parameters: {}", searchParameters);
+    LOG.debug("Request parameters: {}", searchParameters);
     return service.getSpecifiedHorses(searchParameters);
   }
 
@@ -47,6 +49,14 @@ public class HorseEndpoint {
   public HorseDetailDto getById(@PathVariable long id) throws NotFoundException {
     LOG.info("GET " + BASE_PATH + "/{}", id);
     return service.getById(id);
+  }
+
+  @GetMapping("{id}/familytree")
+  public HorseTreeDto getAncestorHorses(@PathVariable long id, @RequestParam(name = "generations") Long maxGenerations)
+      throws NotFoundException, ValidationException {
+    LOG.info("GET " + BASE_PATH + "/{}/familytree", id);
+    LOG.debug("Request parameters: {}", maxGenerations);
+    return service.getAncestorHorses(id, maxGenerations);
   }
 
   @PutMapping("{id}")

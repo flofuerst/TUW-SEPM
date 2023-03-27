@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.assignment.individual.dto.HorseCreateDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseDetailDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseListDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseSearchDto;
+import at.ac.tuwien.sepm.assignment.individual.dto.HorseTreeDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.OwnerDto;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.ConflictException;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.lang.invoke.MethodHandles;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -152,6 +154,29 @@ public class HorseServiceImpl implements HorseService {
         owners,
         mother,
         father);
+  }
+
+  @Override
+  public HorseTreeDto getAncestorHorses(long id, long maxGenerations) throws NotFoundException, ValidationException {
+    LOG.trace("getAncestorHorses({}, {})", id, maxGenerations);
+
+    validator.validateAncestors(id, maxGenerations);
+
+    List<Horse> ancestors = dao.searchAncestorHorses(id, maxGenerations);
+    Horse horse = null;
+
+    // get horse from ancestors-list
+    for (Horse h : ancestors) {
+      if (id == h.getId()) {
+        horse = h;
+      }
+    }
+
+    if (horse == null) {
+      throw new FatalException("Horse is not included in ancestors-list");
+    }
+
+    return mapper.entityToTreeDto(horse, ancestors);
   }
 
   private Map<Long, OwnerDto> ownerMapWithParents(Long ownerId, Horse mother, Horse father) throws NotFoundException {

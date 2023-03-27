@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.assignment.individual.dto.HorseCreateDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseDetailDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseListDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseSearchDto;
+import at.ac.tuwien.sepm.assignment.individual.dto.HorseTreeDto;
 import at.ac.tuwien.sepm.assignment.individual.exception.ConflictException;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
@@ -73,4 +74,15 @@ public interface HorseService {
    * @throws NotFoundException if the horse with the given ID does not exist in the persistent data store
    */
   void delete(Long id) throws NotFoundException;
+
+  /**
+   * Get all ancestors of specified horse stored in the persistent data store until the specified generation.
+   *
+   * @param id             the ID of the horse to get the ancestors of
+   * @param maxGenerations the maximum amount of generations which should get searched
+   * @return the {@link HorseTreeDto} of the horse and its ancestors
+   * @throws NotFoundException   if the horse with given ID does not exist in the persistent data store
+   * @throws ValidationException if the data given for the horse-tree is incorrect (no id, no maxGenerations, invalid maxGenerations)
+   */
+  HorseTreeDto getAncestorHorses(long id, long maxGenerations) throws NotFoundException, ValidationException;
 }

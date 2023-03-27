@@ -140,4 +140,22 @@ public class HorseValidator {
     }
   }
 
+  public void validateAncestors(Long id, Long maxGenerations) throws ValidationException {
+    LOG.trace("validateAncestors({}, {})", id, maxGenerations);
+    List<String> validationErrors = new ArrayList<>();
+
+    if (id == null) {
+      validationErrors.add("No ID given");
+    }
+    if (maxGenerations == null) {
+      validationErrors.add("No maximum of ancestor generations given");
+    } else if (maxGenerations <= 0) {
+      validationErrors.add("Maximum of ancestor generations is given but smaller than 1");
+    }
+
+    if (!validationErrors.isEmpty()) {
+      throw new ValidationException("Validation for ancestor-tree failed", validationErrors);
+    }
+  }
+
 }

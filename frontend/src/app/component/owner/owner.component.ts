@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Owner} from '../../dto/owner';
-import {OwnerService} from "../../service/owner.service";
-import {ToastrService} from "ngx-toastr";
+import {OwnerService} from '../../service/owner.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-owner',

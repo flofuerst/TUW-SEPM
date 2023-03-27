@@ -63,4 +63,14 @@ public interface HorseDao {
    * @throws NotFoundException if the Horse with the given ID does not exist in the persistent data store
    */
   void delete(Long id) throws NotFoundException;
+
+  /**
+   * Get all ancestors of specified horse stored in the persistent data store until the specified generation.
+   *
+   * @param id             the ID of the horse to get the ancestors of
+   * @param maxGenerations the maximum amount of generations which should get searched
+   * @return a list of all matching stored ancestor-horses
+   * @throws NotFoundException if the Horse with the given ID does not exist in the persistent data store
+   */
+  List<Horse> searchAncestorHorses(long id, long maxGenerations) throws NotFoundException;
 }

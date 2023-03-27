@@ -31,6 +31,13 @@ public class HorseJdbcDao implements HorseDao {
   private static final String TABLE_NAME = "horse";
   private static final String SQL_SELECT_ALL = "SELECT * FROM " + TABLE_NAME;
   private static final String SQL_SELECT_BY_ID = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
+  private static final String SQL_SELECT_ANCESTORS = "SELECT *  FROM " + TABLE_NAME + " WHERE id IN"
+      + " (WITH ancestors (id, name, mother_id, father_id, max_generation_amount)"
+      + " AS (SELECT id, name, mother_id, father_id, 1 AS max_generation_amount FROM " + TABLE_NAME + " WHERE id = ?"
+      + " UNION ALL"
+      + " SELECT horse.id, horse.name, horse.mother_id, horse.father_id, ancestors.max_generation_amount + 1 FROM ancestors"
+      + " JOIN horse ON horse.id = ancestors.mother_id OR horse.id = ancestors.father_id WHERE ancestors.max_generation_amount < ?)"
+      + " SELECT DISTINCT id FROM ancestors);";
   private static final String SQL_UPDATE = "UPDATE " + TABLE_NAME
       + " SET name = ?"
       + "  , description = ?"
@@ -152,6 +159,7 @@ public class HorseJdbcDao implements HorseDao {
         ;
   }
 
+  @Override
   public Horse create(HorseCreateDto newHorse) {
     LOG.trace("create({})", newHorse);
 
@@ -186,6 +194,7 @@ public class HorseJdbcDao implements HorseDao {
         ;
   }
 
+  @Override
   public void delete(Long id) throws NotFoundException {
     LOG.trace("delete({})", id);
 
@@ -193,6 +202,19 @@ public class HorseJdbcDao implements HorseDao {
     if (deleted == 0) {
       throw new NotFoundException("Could not delete horse with ID " + id + ", because it does not exist");
     }
+  }
+
+  @Override
+  public List<Horse> searchAncestorHorses(long id, long maxGenerations) throws NotFoundException {
+    LOG.trace("searchAncestorHorses({}, {})", id, maxGenerations);
+    List<Horse> ancestors;
+    ancestors = jdbcTemplate.query(SQL_SELECT_ANCESTORS, this::mapRow, id, maxGenerations);
+
+    if (ancestors.isEmpty()) {
+      throw new NotFoundException("No horse ancestors with ID %d found".formatted(id));
+    }
+
+    return ancestors;
   }
 
   private Horse mapRow(ResultSet result, int rownum) throws SQLException {

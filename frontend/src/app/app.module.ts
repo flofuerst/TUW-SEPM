@@ -14,6 +14,10 @@ import {HorseCreateEditComponent} from './component/horse/horse-create-edit/hors
 import {HorseComponent} from './component/horse/horse.component';
 import {OwnerCreateComponent} from './component/owner/owner-create/owner-create.component';
 import {OwnerComponent} from './component/owner/owner.component';
+import {HorseFamilyTreeComponent} from './component/horse/horse-familytree/horse-family-tree.component';
+import {
+  HorseFamilyTreeNodeComponent
+} from './component/horse/horse-familytree/horse-familytree-node/horse-family-tree-node.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +28,8 @@ import {OwnerComponent} from './component/owner/owner.component';
     AutocompleteComponent,
     OwnerCreateComponent,
     OwnerComponent,
+    HorseFamilyTreeComponent,
+    HorseFamilyTreeNodeComponent,
   ],
   imports: [
     BrowserModule,
