@@ -75,6 +75,7 @@ public class HorseEndpoint {
   }
 
   @DeleteMapping("{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable long id) throws NotFoundException {
     LOG.info("DELETE " + BASE_PATH + "/{}", id);
     service.delete(id);
