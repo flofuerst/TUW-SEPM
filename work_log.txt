@@ -39,3 +39,8 @@ Dauer: 2h 30min
 Bearbeitete Story: US09
 Datum: 26.07.2023, 27.07.2023
 Dauer: 4h 30min
+
+Bearbeitete Story: TS28
+Datum: 27.07.2023
+Dauer: 1h
+

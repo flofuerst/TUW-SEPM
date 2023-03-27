@@ -8,6 +8,8 @@ import {Horse, HorseFamilyTree} from '../../../../dto/horse';
   styleUrls: ['./horse-family-tree-node.component.scss']
 })
 export class HorseFamilyTreeNodeComponent {
+  @Input()
+  horse?: HorseFamilyTree;
   isExpanded?: boolean;
 
   constructor(
@@ -16,8 +18,7 @@ export class HorseFamilyTreeNodeComponent {
     this.isExpanded = false;
   }
 
-  @Input()
-  horse?: HorseFamilyTree;
+
 
   delete(horse: Horse) {
     this.familyTree.deleteHorse(horse);
