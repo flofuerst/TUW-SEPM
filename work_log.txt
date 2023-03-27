@@ -33,8 +33,8 @@ Datum: 24.03.2023, 25.03.2023
 Dauer: 4h 15min
 
 Bearbeitete Story: US08
-Datum: 25.06.2023, 26.03.2023
-Dauer: 2h 30min
+Datum: 25.06.2023, 26.03.2023, 27.03.2023
+Dauer: 2h 45min
 
 Bearbeitete Story: US09
 Datum: 26.07.2023, 27.07.2023

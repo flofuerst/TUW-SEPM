@@ -192,18 +192,25 @@ public class HorseServiceImpl implements HorseService {
       throw new FatalException("Owner %d referenced by horse not found".formatted(ownerId));
     }
 
-    if (mother != null && mother.getOwnerId() != null) {
-      try {
-        owners.put(mother.getOwnerId(), ownerService.getById(mother.getOwnerId()));
-      } catch (NotFoundException e) {
-        throw new FatalException("Owner %d referenced by mother horse not found".formatted(mother.getOwnerId()));
+    if (mother != null) {
+      Long motherOwnerId = mother.getOwnerId();
+      if (motherOwnerId != null) {
+        try {
+          owners.put(motherOwnerId, ownerService.getById(motherOwnerId));
+        } catch (NotFoundException e) {
+          throw new FatalException("Owner %d referenced by mother horse not found".formatted(motherOwnerId));
+        }
       }
     }
-    if (father != null && father.getOwnerId() != null) {
-      try {
-        owners.put(father.getOwnerId(), ownerService.getById(father.getOwnerId()));
-      } catch (NotFoundException e) {
-        throw new FatalException("Owner %d referenced by father horse not found".formatted(father.getOwnerId()));
+
+    if (father != null) {
+      Long fatherOwnerId = father.getOwnerId();
+      if (fatherOwnerId != null) {
+        try {
+          owners.put(fatherOwnerId, ownerService.getById(fatherOwnerId));
+        } catch (NotFoundException e) {
+          throw new FatalException("Owner %d referenced by father horse not found".formatted(fatherOwnerId));
+        }
       }
     }
 
