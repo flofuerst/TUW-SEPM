@@ -13,12 +13,12 @@
         {{dateOfBirthAsLocaleDate(horse)}}
       </div>
       <div class="btn-group d-inline-block">
-        <a [routerLink]="['../../detailView', horse.id]"
+        <a [routerLink]="['../../', horse.id, 'detailView']"
            aria-label="Show horse details"
            class="btn btn-sm responsive-info-button">
           <i class="bi bi-info-lg"></i>
         </a>
-        <a [routerLink]="['../../edit', horse.id]"
+        <a [routerLink]="['../../', horse.id, 'edit']"
            aria-label="Edit horse"
            class="btn btn-sm responsive-warning-button">
           <i class="bi bi-pencil"></i>

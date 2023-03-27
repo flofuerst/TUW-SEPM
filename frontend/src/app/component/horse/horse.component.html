@@ -102,17 +102,17 @@
       <td>
         <div class="btn-group">
           <a class="btn btn-sm responsive-info-button"
-             [routerLink]="['detailView', horse.id]"
+             [routerLink]="[horse.id, 'detailView']"
              aria-label="Show horse details">
             <i class="bi bi-info-lg"></i>
           </a>
           <a class="btn btn-sm responsive-tree-button"
-             [routerLink]="[ horse.id, 'familytree']"
+             [routerLink]="[horse.id, 'familytree']"
              aria-label="Show family tree of horse">
             <i class="bi bi-list"></i>
           </a>
           <a class="btn btn-sm responsive-warning-button"
-             [routerLink]="['edit', horse.id]"
+             [routerLink]="[horse.id, 'edit']"
              aria-label="Edit horse">
             <i class="bi bi-pencil"></i>
           </a>

@@ -130,7 +130,7 @@
         >
           <div class="col-form-label"
                *ngIf="modeIsDetailView"
-               [routerLink]="['../', horse.mother?.id]"
+               [routerLink]="['../../', horse.mother?.id, 'detailView']"
                aria-label="Show details of mother horse"
           >
             {{horse.mother?.name}} <i *ngIf="horse.mother?.name" class="bi bi-info-lg"></i>
@@ -160,7 +160,7 @@
         >
           <div class="col-form-label"
                *ngIf="modeIsDetailView"
-               [routerLink]="['../', horse.father?.id]"
+               [routerLink]="['../../', horse.father?.id, 'detailView']"
                aria-label="Show details of father horse"
           >
             {{horse.father?.name}} <i *ngIf="horse.father?.name" class="bi bi-info-lg"></i>
@@ -228,7 +228,7 @@
             class="btn btn-sm responsive-warning-button"
             *ngIf="modeIsDetailView"
             aria-label="Edit horse"
-            [routerLink]="['../../edit', horse.id]"
+            [routerLink]="['../../', horse.id, 'edit']"
     >
       Edit horse <i class="bi bi-pencil"></i>
     </button>
