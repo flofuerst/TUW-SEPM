@@ -22,7 +22,7 @@ public class DataCleanupBean {
   private final DataSource dataSource;
 
   /**
-   * Executed once when the component is instantiated. Inserts some dummy data.
+   * Executed once when the component is instantiated. Clean up dummy data.
    */
   public DataCleanupBean(DataSource dataSource) {
     this.dataSource = dataSource;

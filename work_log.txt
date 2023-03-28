@@ -1,6 +1,6 @@
 Name: Florian Fürst
 Matrikelnummer: 12122096
-Gesamtsumme der Arbeitszeit am Projekt:
+Gesamtsumme der Arbeitszeit am Projekt: 44h
 
 ***************************************
 
@@ -58,4 +58,4 @@ Dauer: 2h 45min
 
 Bearbeitete Story: TS15
 Datum: 28.03.2023
-Dauer: 1h 30min
+Dauer: 2h

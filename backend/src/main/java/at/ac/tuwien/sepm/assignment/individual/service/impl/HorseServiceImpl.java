@@ -105,12 +105,14 @@ public class HorseServiceImpl implements HorseService {
       throw new ConflictException("Update for horse failed because of conflict(s)", conflictErrors);
     }
 
+    Horse horseBeforeUpdate = dao.getById(horse.id());
     validator.validateForUpdate(
         horse,
         mother != null ? mapper.entityToListDto(mother, ownerMapForSingleId(mother.getOwnerId())) : null,
         father != null ? mapper.entityToListDto(father, ownerMapForSingleId(father.getOwnerId())) : null,
         dao.isParentOfChildren(horse.id()),
-        dao.getById(horse.id()).getSex()
+        horseBeforeUpdate.getSex(),
+        dao.isOlderThanChildren(horse.id(), horse.dateOfBirth())
     );
     Horse updatedHorse = dao.update(horse);
     Map<Long, OwnerDto> owners = ownerMapWithParents(updatedHorse.getOwnerId(), mother, father);

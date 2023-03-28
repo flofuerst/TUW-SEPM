@@ -6,6 +6,7 @@ import at.ac.tuwien.sepm.assignment.individual.dto.HorseSearchDto;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -81,4 +82,13 @@ public interface HorseDao {
    * @return the boolean which indicates if the horse is a parent horse; true if it is parent horse and false if it is not a parent horse
    */
   boolean isParentOfChildren(long id);
+
+  /**
+   * Checks if horse is older than its children
+   *
+   * @param id          the ID of the horse which gets checked
+   * @param dateOfBirth the date of the horse which gets checked
+   * @return the boolean which indicates if the horse is older than all of its children; true if parent is older and false if parent is younger or equal old
+   */
+  boolean isOlderThanChildren(long id, LocalDate dateOfBirth);
 }

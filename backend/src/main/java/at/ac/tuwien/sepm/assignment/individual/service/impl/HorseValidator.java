@@ -89,7 +89,8 @@ public class HorseValidator {
     }
   }
 
-  public void validateForUpdate(HorseDetailDto horse, HorseListDto mother, HorseListDto father, boolean isParentOfChildren, Sex sexBeforeUpdate)
+  public void validateForUpdate(HorseDetailDto horse, HorseListDto mother, HorseListDto father, boolean isParentOfChildren, Sex sexBeforeUpdate,
+                                boolean isOlderThanChildren)
       throws ValidationException, ConflictException {
     LOG.trace("validateForUpdate({}, {}, {})", horse, mother, father);
     List<String> validationErrors = new ArrayList<>();
@@ -116,6 +117,12 @@ public class HorseValidator {
     if (isParentOfChildren && horse.sex() != sexBeforeUpdate) {
       conflictErrors.add("Sex can't be changed, because horse is a parent horse");
     }
+
+    if (isParentOfChildren && !isOlderThanChildren) {
+      conflictErrors.add("Date can't be changed, because horse would be younger or equal than its children");
+
+    }
+
     if (!conflictErrors.isEmpty()) {
       throw new ConflictException("Update for horse failed because of conflict(s)", conflictErrors);
     }
