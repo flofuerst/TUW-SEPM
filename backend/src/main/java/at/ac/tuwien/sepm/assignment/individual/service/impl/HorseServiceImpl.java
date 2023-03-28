@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -86,12 +87,30 @@ public class HorseServiceImpl implements HorseService {
 
     // get parents from database with id of parents
     // this is used for validation if something is not okay in frontend and values of parents in request and database differ
-    Horse mother = horse.mother() != null ? dao.getById(horse.mother().id()) : null;
-    Horse father = horse.father() != null ? dao.getById(horse.father().id()) : null;
+    // also wrap exception to ConflictException
+    Horse mother = null;
+    Horse father = null;
+    List<String> conflictErrors = new ArrayList<>();
+    try {
+      mother = horse.mother() != null ? dao.getById(horse.mother().id()) : null;
+    } catch (NotFoundException e) {
+      conflictErrors.add("Mother of horse does not exist");
+    }
+    try {
+      father = horse.father() != null ? dao.getById(horse.father().id()) : null;
+    } catch (NotFoundException e) {
+      conflictErrors.add("Father of horse does not exist");
+    }
+    if (!conflictErrors.isEmpty()) {
+      throw new ConflictException("Update for horse failed because of conflict(s)", conflictErrors);
+    }
+
     validator.validateForUpdate(
         horse,
         mother != null ? mapper.entityToListDto(mother, ownerMapForSingleId(mother.getOwnerId())) : null,
-        father != null ? mapper.entityToListDto(father, ownerMapForSingleId(father.getOwnerId())) : null
+        father != null ? mapper.entityToListDto(father, ownerMapForSingleId(father.getOwnerId())) : null,
+        dao.isParentOfChildren(horse.id()),
+        dao.getById(horse.id()).getSex()
     );
     Horse updatedHorse = dao.update(horse);
     Map<Long, OwnerDto> owners = ownerMapWithParents(updatedHorse.getOwnerId(), mother, father);
@@ -112,8 +131,23 @@ public class HorseServiceImpl implements HorseService {
 
     // get parents from database with id of parents
     // this is used for validation if something is not okay in frontend and values of parents in request and database differ
-    Horse mother = newHorse.mother() != null ? dao.getById(newHorse.mother().id()) : null;
-    Horse father = newHorse.father() != null ? dao.getById(newHorse.father().id()) : null;
+    // also wrap exception to ConflictException
+    Horse mother = null;
+    Horse father = null;
+    List<String> conflictErrors = new ArrayList<>();
+    try {
+      mother = newHorse.mother() != null ? dao.getById(newHorse.mother().id()) : null;
+    } catch (NotFoundException e) {
+      conflictErrors.add("Mother of horse does not exist");
+    }
+    try {
+      father = newHorse.father() != null ? dao.getById(newHorse.father().id()) : null;
+    } catch (NotFoundException e) {
+      conflictErrors.add("Father of horse does not exist");
+    }
+    if (!conflictErrors.isEmpty()) {
+      throw new ConflictException("Create for horse failed because of conflict(s)", conflictErrors);
+    }
 
     validator.validateForCreate(
         newHorse,

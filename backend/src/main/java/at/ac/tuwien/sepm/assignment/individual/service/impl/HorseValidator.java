@@ -89,7 +89,8 @@ public class HorseValidator {
     }
   }
 
-  public void validateForUpdate(HorseDetailDto horse, HorseListDto mother, HorseListDto father) throws ValidationException, ConflictException {
+  public void validateForUpdate(HorseDetailDto horse, HorseListDto mother, HorseListDto father, boolean isParentOfChildren, Sex sexBeforeUpdate)
+      throws ValidationException, ConflictException {
     LOG.trace("validateForUpdate({}, {}, {})", horse, mother, father);
     List<String> validationErrors = new ArrayList<>();
 
@@ -106,12 +107,17 @@ public class HorseValidator {
       throw new ValidationException("Validation of horse for update failed", validationErrors);
     }
 
-    //only check for conflicts if validation is okay
+    // only check for conflicts if validation is okay
     // horseId is null, because it is not existing during create
     List<String> conflictErrors = new ArrayList<>();
     checkForConflicts(null, horse.dateOfBirth(), mother, father, conflictErrors);
+
+    // check if horse is parent of children and if sex changes
+    if (isParentOfChildren && horse.sex() != sexBeforeUpdate) {
+      conflictErrors.add("Sex can't be changed, because horse is a parent horse");
+    }
     if (!conflictErrors.isEmpty()) {
-      throw new ConflictException("Create for horse failed because of conflict(s)", conflictErrors);
+      throw new ConflictException("Update for horse failed because of conflict(s)", conflictErrors);
     }
   }
 

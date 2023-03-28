@@ -31,6 +31,7 @@ public class HorseJdbcDao implements HorseDao {
   private static final String TABLE_NAME = "horse";
   private static final String SQL_SELECT_ALL = "SELECT * FROM " + TABLE_NAME;
   private static final String SQL_SELECT_BY_ID = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
+  private static final String SQL_SELECT_BY_PARENT_ID = "SELECT * FROM " + TABLE_NAME + " WHERE mother_id = ? OR father_id = ?";
   private static final String SQL_SELECT_ANCESTORS = "SELECT *  FROM " + TABLE_NAME + " WHERE id IN"
       + " (WITH ancestors (id, name, mother_id, father_id, max_generation_amount)"
       + " AS (SELECT id, name, mother_id, father_id, 1 AS max_generation_amount FROM " + TABLE_NAME + " WHERE id = ?"
@@ -215,6 +216,16 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     return ancestors;
+  }
+
+  @Override
+  public boolean isParentOfChildren(long id) {
+    LOG.trace("isParentOfChildren({})", id);
+
+    List<Horse> childrenHorses;
+    childrenHorses = jdbcTemplate.query(SQL_SELECT_BY_PARENT_ID, this::mapRow, id, id);
+
+    return !childrenHorses.isEmpty();
   }
 
   private Horse mapRow(ResultSet result, int rownum) throws SQLException {

@@ -55,3 +55,7 @@ Dauer: 15min
 Bearbeitete Story: TS13
 Datum: 27.03.2023
 Dauer: 2h 45min
+
+Bearbeitete Story: TS15
+Datum: 28.03.2023
+Dauer: 1h 30min
