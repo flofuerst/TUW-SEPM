@@ -1,61 +1,61 @@
 Name: Florian Fürst
-Matrikelnummer: 12122096
-Gesamtsumme der Arbeitszeit am Projekt: 44h
+Matriculation number: 12122096
+Total working time on the project: 44h
 
 ***************************************
 
-Bearbeitete Story: US01
-Datum: 19.03.2023
-Dauer: 5h
+Story: US01
+Date: 19.03.2023
+Duration: 5h
 
-Bearbeitete Story: US02
-Datum: 20.03.2023
-Dauer: 2h
+Story: US02
+Date: 20.03.2023
+Duration: 2h
 
-Bearbeitete Story: US03
-Datum: 20.03.2023, 22.03.2023
-Dauer: 2h 15min
+Story: US03
+Date: 20.03.2023, 22.03.2023
+Duration: 2h 15min
 
-Bearbeitete Story: US04
-Datum: 21.03.2023, 22.03.2023
-Dauer: 5h 45min
+Story: US04
+Date: 21.03.2023, 22.03.2023
+Duration: 5h 45min
 
-Bearbeitete Story: US05
-Datum: 22.03.2023, 24.03.2023, 26.03.2023
-Dauer: 3h 15min
+Story: US05
+Date: 22.03.2023, 24.03.2023, 26.03.2023
+Duration: 3h 15min
 
-Bearbeitete Story: US06
-Datum: 23.03.2023
-Dauer: 7h 15min
+Story: US06
+Date: 23.03.2023
+Duration: 7h 15min
 
-Bearbeitete Story: US07
-Datum: 24.03.2023, 25.03.2023
-Dauer: 4h 15min
+Story: US07
+Date: 24.03.2023, 25.03.2023
+Duration: 4h 15min
 
-Bearbeitete Story: US08
-Datum: 25.03.2023, 26.03.2023, 27.03.2023
-Dauer: 2h 45min
+Story: US08
+Date: 25.03.2023, 26.03.2023, 27.03.2023
+Duration: 2h 45min
 
-Bearbeitete Story: US09
-Datum: 26.03.2023, 27.03.2023
-Dauer: 4h 30min
+Story: US09
+Date: 26.03.2023, 27.03.2023
+Duration: 4h 30min
 
-Bearbeitete Story: TS28
-Datum: 27.03.2023, 28.03.2023
-Dauer: 1h 15min
+Story: TS28
+Date: 27.03.2023, 28.03.2023
+Duration: 1h 15min
 
-Bearbeitete Story: TS10
-Datum: 27.03.2023
-Dauer: 45min
+Story: TS10
+Date: 27.03.2023
+Duration: 45min
 
-Bearbeitete Story: TS24
-Datum: 27.03.2023
-Dauer: 15min
+Story: TS24
+Date: 27.03.2023
+Duration: 15min
 
-Bearbeitete Story: TS13
-Datum: 27.03.2023
-Dauer: 2h 45min
+Story: TS13
+Date: 27.03.2023
+Duration: 2h 45min
 
-Bearbeitete Story: TS15
-Datum: 28.03.2023
-Dauer: 2h
+Story: TS15
+Date: 28.03.2023
+Duration: 2h
